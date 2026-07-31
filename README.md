@@ -5,5 +5,5 @@ This repo contains the set of agent skills, rules, and sub-agents that I always 
 ## Install (Cursor)
 
 ```bash
-git clone git@github.com:Olian04/agent-prelude.git ~/.cursor/plugins/local/prelude
+mkdir -p ~/.cursor/plugins/local && git clone git@github.com:Olian04/agent-prelude.git ~/.cursor/plugins/local/prelude
 ```
