@@ -7,3 +7,7 @@ This repo contains the set of agent skills, rules, and sub-agents that I always 
 ```bash
 mkdir -p ~/.cursor/plugins/local && git clone git@github.com:Olian04/agent-prelude.git ~/.cursor/plugins/local/prelude
 ```
+
+## Related repos
+
+- [.prelude](https://github.com/Olian04/.prelude)
