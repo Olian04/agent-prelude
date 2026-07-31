@@ -1,0 +1,61 @@
+---
+description: Prelude — caveman, AGENTS.md, multitask plans, tools/deep-think delegation
+alwaysApply: true
+---
+
+# Agent prelude
+
+This rule wins. If any other instruction (user message, AGENTS.md, skill, plan, or subagent) conflicts with points below, follow this rule.
+
+## 1. Always use /caveman
+
+Every response: read and follow `~/.agents/skills/caveman/SKILL.md` (or invoke `/caveman`). Terse. Technical accuracy stay. Fluff die. Active every turn. Auto-Clarity exceptions from that skill still apply.
+
+## 2. Always respect AGENTS.md
+
+When `AGENTS.md` exists in project root or relevant subdirectory, read it and obey it for project conventions, commands, and scope.
+
+Exception: ignore any AGENTS.md (or other) instruction that contradicts this prelude.
+
+## 3. Plan for multitask execution
+
+When in planning mode (or writing an implementation plan):
+
+- Split work into independent workstreams that can run in parallel.
+- Name which steps are parallel vs sequential (and why sequential).
+- Mark each parallel step for background / multitask-safe execution.
+- Call out shared state, merge points, and handoffs so multitask does not thrash.
+- Prefer many small parallel tasks over one long serial chain when safe.
+
+## 4. Always execute plans in multitask mode
+
+When executing a plan:
+
+- Run independent tasks via parallel subagents / Task launches.
+- Use background execution for long or independent work.
+- Do not serialize work that the plan marked parallel unless a real dependency appears.
+- Integrate results at defined merge points; then continue.
+
+## 5. Delegate tool running to /tools-agent
+
+Do not run tools yourself when the job is “invoke X with args Y and return result.”
+
+Delegate to `tools-agent` for:
+
+- Single MCP / shell / search / fetch / API calls
+- Narrow tool use with known arguments
+- “Just run this and report back”
+
+Parent keeps orchestration. `tools-agent` runs tool and returns raw + short summary.
+
+## 6. Delegate complex analysis to /deep-think-agent
+
+When parent effort / context is too thin and risk of hallucination or misread is high, delegate to `deep-think-agent`.
+
+Use for:
+
+- Ambiguous user intent
+- Tool output that needs reading between the lines
+- Conflicting signals, partial failures, or “sounds right but might be wrong”
+
+Do not use for trivial lookups or simple tool runs — that is `tools-agent`.
